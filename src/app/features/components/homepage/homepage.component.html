@@ -1,0 +1,48 @@
+<h2 [ngClass]="'center'"> Home-Page</h2>
+<form [formGroup]="homeform" [ngClass]="['form']" (ngSubmit)="submit()">
+    <div formArrayName='paragraphdata'>
+        <div *ngFor="let values of paragraphdata().controls; let i=index">
+            <div [formGroupName]="i">
+                <h2 required>{{values.value.question}} ?</h2>
+                <mat-form-field appearance="outline">
+                    <mat-label for="Answer">Answer</mat-label>
+                    <input matInput type="text" formControlName="answer" />
+                </mat-form-field>
+                <mat-error ngClass="fielderror"
+                *ngIf="paragraphdata().controls[i].get('answer')!.invalid && (paragraphdata().controls[i].get('answer')!.dirty || paragraphdata().controls[i].get('answer')!.touched)">
+
+                <mat-error class="alert-danger"
+                    *ngIf="paragraphdata().controls[i].get('answer')!.errors?.['required']">
+                    Required
+                </mat-error>
+            </mat-error>
+            </div>
+        </div>
+    </div>
+    <div formArrayName='checkboxdata'>
+        <div *ngFor="let values of checkboxdata().controls; let i=index">
+            <div [formGroupName]="i">
+                <p> Q{{i+1}}:{{values.value.question}}?</p>
+                <!-- <div #option> -->
+                <p *ngFor="let check of values.value.checkoption; let j=index">
+                    <mat-checkbox  (change)="addclick($event,i,j)">
+                        {{check.checkvalue}}
+                    </mat-checkbox>
+                    <!-- #option -->
+                    <br>
+                    <mat-form-field appearance="outline" *ngIf="check.otherstatus === true">
+                        <mat-label for="otheranswer">Answer</mat-label>
+                        <input matInput type="text" formControlName="otheranswer" />
+                    </mat-form-field>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+    <button type="button" mat-raised-button color="primary" [ngClass]="['btn']" (click)="addQuestion()">Add Question
+        <mat-icon>plus_one</mat-icon>
+    </button>
+    <div>
+        <button type="submit" mat-raised-button color="primary"  [ngClass]="['submit']">Review my answer</button>
+    </div>
+</form>
