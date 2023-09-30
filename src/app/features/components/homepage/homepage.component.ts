@@ -120,6 +120,8 @@ export class HomepageComponent implements OnInit {
       this.formdata.value.paragraphrq = true;
     }
     this.formdata.value.paragraphrq = false;
+    console.log(this.formdata.value.paragraphrq);
+    
   }
   addclick(event: any, i: number, j: number) {
     if (
@@ -138,6 +140,7 @@ export class HomepageComponent implements OnInit {
   }
 
   submit() {
+    console.log(this.homeform);
     if (
       this.homeform.value.checkboxdata?.length !== 0 ||
       this.homeform.value.paragraphdata?.length !== 0
@@ -148,9 +151,12 @@ export class HomepageComponent implements OnInit {
 
       let req = check.includes(true);
 
-      if (req == false && this.formdata.value.paragraphrq == false) {
+      if (req == false && this.formdata.value.paragraphrq == false && this.homeform.status == 'VALID') {
+        console.log(this.homeform);
+        this.formdata.value.paragraphrq = false;
+        
         this.FormService.submitdata(this.homeform.value);
-        this.router.navigate(['feature/viewpage']);
+        // this.router.navigate(['feature/viewpage']);
       }
     }
   }

@@ -16,6 +16,7 @@ export class ViewpageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userdata = this.FormService.data
+    console.log("userdata",this.userdata)
   }
 
 }
