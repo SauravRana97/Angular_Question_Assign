@@ -31,7 +31,7 @@
                         <input matInput type="text" formControlName="otheranswer" (keyup)="otherchange($event,i)" />
                     </mat-form-field>
                 </p>
-                <mat-error class="alert-danger" *ngIf="values.value.reqcheck == true">
+                <mat-error class="alert-danger" *ngIf="requiredmsg">
                     Required
                   </mat-error>
             </div>

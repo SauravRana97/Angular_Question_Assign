@@ -121,8 +121,8 @@ export class HomepageComponent implements OnInit {
     }
     this.formdata.value.paragraphrq = false;
     console.log(this.formdata.value.paragraphrq);
-    
   }
+  requiredmsg: boolean = false;
   addclick(event: any, i: number, j: number) {
     if (
       this.checkboxdata().at(i).get('checkoption')!.value[j].checkvalue ==
@@ -133,13 +133,24 @@ export class HomepageComponent implements OnInit {
       this.otheroption = true;
       this.checkboxdata().at(i).value.reqcheck = false;
     }
+
     this.checkboxdata().at(i).get('checkoption')!.value[j].checkstatus =
       event.checked;
 
     this.checkboxdata().at(i).value.reqcheck = false;
+    if (
+      this.checkboxdata().at(i).get('checkoption')!.value[j].checkstatus ==
+      false
+    ) {
+      if (this.checkboxdata().at(i).get('reqcheck')!.value) {
+        this.checkboxdata().at(i).value.reqcheck = true;
+      }
+
+      this.checkboxdata().at(i).value.reqcheck = true;
+    }
   }
-  otherchange(event:any,i:number){
-    console.log(event,i)
+  otherchange(event: any, i: number) {
+    console.log(event, i);
     this.checkboxdata().at(i).value.reqcheck = false;
   }
 
@@ -155,10 +166,13 @@ export class HomepageComponent implements OnInit {
 
       let req = check.includes(true);
 
-      if (req == false && this.formdata.value.paragraphrq == false && this.homeform.status == 'VALID') {
+      if (
+        req == false &&
+        this.formdata.value.paragraphrq == false &&
+        this.homeform.status == 'VALID'
+      ) {
         console.log(this.homeform);
-        
-        
+
         this.FormService.submitdata(this.homeform.value);
         this.router.navigate(['feature/viewpage']);
       }
