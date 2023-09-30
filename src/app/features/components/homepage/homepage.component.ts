@@ -160,7 +160,7 @@ export class HomepageComponent implements OnInit {
         
         
         this.FormService.submitdata(this.homeform.value);
-        // this.router.navigate(['feature/viewpage']);
+        this.router.navigate(['feature/viewpage']);
       }
     }
   }
