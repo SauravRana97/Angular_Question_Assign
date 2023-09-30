@@ -122,7 +122,6 @@ export class HomepageComponent implements OnInit {
     this.formdata.value.paragraphrq = false;
     console.log(this.formdata.value.paragraphrq);
   }
-  requiredmsg: boolean = false;
   addclick(event: any, i: number, j: number) {
     if (
       this.checkboxdata().at(i).get('checkoption')!.value[j].checkvalue ==
