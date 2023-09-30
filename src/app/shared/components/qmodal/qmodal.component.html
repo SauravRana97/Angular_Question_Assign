@@ -86,7 +86,8 @@
   </div>
   <p><mat-checkbox formControlName="userchoice" *ngIf="userform.value.type == '2'" (click)="addother()">Allow user to
       specify their own answer</mat-checkbox></p>
-  <p><mat-checkbox formControlName="requiredfield">This field is required</mat-checkbox></p>
+  <p><mat-checkbox formControlName="paragraphrq" *ngIf="userform.value.type == '1'">This field is required</mat-checkbox></p>
+  <p><mat-checkbox formControlName="checkreq" *ngIf="userform.value.type == '2'">This field is required</mat-checkbox></p>
   <!-- <input class="example-margin" type="checkbox" formControlName="userchoice">Checked <br>
     <input class="example-margin" type="checkbox" formControlName="requiredfield">Checked -->
 

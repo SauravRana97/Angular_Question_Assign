@@ -35,7 +35,7 @@ export class HomepageComponent implements OnInit {
   otheroption: boolean = false;
 
   formdata: any;
-  required: boolean = false;
+  required: any = [];
 
   homeform = this.fb.group({
     paragraphdata: this.fb.array([]),
@@ -67,41 +67,44 @@ export class HomepageComponent implements OnInit {
     this.Dialog.afterClosed().subscribe((result) => {
       if (result == true) {
         this.formdata = this.FormService.formres;
-        this.required = this.formdata.value.requiredfield;
+        this.required.push(this.formdata.value.requiredfield);
 
-        console.log('this.formdata', this.formdata.value);
         if (this.formdata.value.type == 1) {
-          if (this.formdata.value.requiredfield == true) {
+          if (this.formdata.value.paragraphrq == true) {
             this.paragraphdata().push(
               this.fb.group({
-                question: [this.formdata.value.question, ],
+                question: [this.formdata.value.question],
                 answer: ['', [Validators.required]],
               })
             );
           } else {
             this.paragraphdata().push(
               this.fb.group({
-                question: [this.formdata.value.question,],
+                question: [this.formdata.value.question],
                 answer: [''],
               })
             );
           }
         } else if (this.formdata.value.type == 2) {
-          
-          if (this.formdata.value.requiredfield == true) {
+          if (this.formdata.value.checkreq == true) {
             this.checkboxdata().push(
               this.fb.group({
-                question: [this.formdata.value.checkqst,],  
-                checkoption: [this.formdata.value.checkbox ,[Validators.required]],
-                otheranswer: ['',],
+                question: [this.formdata.value.checkqst],
+                checkoption: [
+                  this.formdata.value.checkbox,
+                  [Validators.required],
+                ],
+                otheranswer: [''],
+                reqcheck: [true],
               })
-            );  
+            );
           } else {
             this.checkboxdata().push(
               this.fb.group({
-                question: [this.formdata.value.checkqst,],
+                question: [this.formdata.value.checkqst],
                 checkoption: [this.formdata.value.checkbox],
-                otheranswer: ['',],
+                otheranswer: [''],
+                reqcheck: [false],
               })
             );
           }
@@ -109,62 +112,46 @@ export class HomepageComponent implements OnInit {
       }
     });
   }
+  changere(i: number) {
+    let checkvalue = this.paragraphdata().value.map((item: any) => {
+      return item.answer == '';
+    });
+    if (checkvalue.includes(true)) {
+      this.formdata.value.paragraphrq = true;
+    }
+    this.formdata.value.paragraphrq = false;
+  }
   addclick(event: any, i: number, j: number) {
-    // console.log('event', event, 'i', i, 'j', j);
-    this.checkboxdata().at(i).get('checkoption')!.value[j].checkstatus =
-      event.checked;
-
-     if(this.formdata.value.requiredfield == true){
-      console.log(this.checkboxdata().at(i).get('checkoption')?.status)
-     }
-      
     if (
       this.checkboxdata().at(i).get('checkoption')!.value[j].checkvalue ==
       'other'
     ) {
       this.checkboxdata().at(i).get('checkoption')!.value[j].otherstatus =
-        event.checkejd;
+        event.checked;
       this.otheroption = true;
+      this.checkboxdata().at(i).value.reqcheck = false;
     }
+    this.checkboxdata().at(i).get('checkoption')!.value[j].checkstatus =
+      event.checked;
+
+    this.checkboxdata().at(i).value.reqcheck = false;
   }
 
   submit() {
-    console.log(this.homeform);
-  
     if (
       this.homeform.value.checkboxdata?.length !== 0 ||
       this.homeform.value.paragraphdata?.length !== 0
     ) {
-      // if(this.homeform.invalid){
-      //   return 
-      // }
-      this.FormService.submitdata(this.homeform.value);
-      // this.router.navigate(['feature/viewpage']);
+      let check = this.checkboxdata()?.value.map((item: any) => {
+        return item.reqcheck;
+      });
+
+      let req = check.includes(true);
+
+      if (req == false && this.formdata.value.paragraphrq == false) {
+        this.FormService.submitdata(this.homeform.value);
+        this.router.navigate(['feature/viewpage']);
+      }
     }
-
-
-    // this.router.navigate(['feature/viewpage']);
-
-    // this.checkedOptions = []
-    //  const test = this.option.toArray().filter((option: any) => {
-    //     if (option.checked)
-    //     {
-    //       return JSON.parse(option.value)
-    //   let checkedoption = ;
-
-    //   for (const key in checkedoption) {
-    //     console.log("key",key)
-    //     console.log('value in object',checkedoption[key])
-    //     // if (Object.prototype.hasOwnProperty.call(object, key)) {
-    //     //   const element = object[key];
-
-    //     // }
-    //   }
-    //   // console.log(checkedoption)
-    //   //  console.log(JSON.parse(option.value))
-    // }
-
-    //   // this.checkedOptions.push(option.value);
-    // }});
   }
 }

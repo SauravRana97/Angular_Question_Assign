@@ -28,7 +28,8 @@ export class QmodalComponent implements OnInit {
     question: ['', [Validators.required]],
     checkqst: ['', [Validators.required]],
     userchoice: [false, [Validators.required]],
-    requiredfield: [false, [Validators.required]],
+    paragraphrq: [false, [Validators.required]],
+    checkreq: [false, [Validators.required]],
     checkbox: this.fb.array([], [Validators.required]),
   });
 
@@ -69,7 +70,6 @@ export class QmodalComponent implements OnInit {
     let check = this.userform.value.checkbox?.map((item:any)=>{
       return item.checkvalue
     });   
-    console.log(!check?.includes('other'));
      
     if (!check?.includes('other')) {  
       this.checkbox().push(

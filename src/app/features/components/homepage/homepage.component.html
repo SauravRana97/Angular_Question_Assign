@@ -6,7 +6,7 @@
                 <h2 required>{{values.value.question}} ?</h2>
                 <mat-form-field appearance="outline">
                     <mat-label for="Answer">Answer</mat-label>
-                    <input matInput type="text" formControlName="answer" />
+                    <input matInput type="text" formControlName="answer"(keyup)="changere(i)" />
                 </mat-form-field>
                 <mat-error ngClass="fielderror"
                 *ngIf="paragraphdata().controls[i].get('answer')!.invalid && (paragraphdata().controls[i].get('answer')!.dirty || paragraphdata().controls[i].get('answer')!.touched)">
