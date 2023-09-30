@@ -8,14 +8,9 @@
                     <mat-label for="Answer">Answer</mat-label>
                     <input matInput type="text" formControlName="answer"(keyup)="changere(i)" />
                 </mat-form-field>
-                <mat-error ngClass="fielderror"
-                *ngIf="paragraphdata().controls[i].get('answer')!.invalid && (paragraphdata().controls[i].get('answer')!.dirty || paragraphdata().controls[i].get('answer')!.touched)">
-
-                <mat-error class="alert-danger"
-                    *ngIf="paragraphdata().controls[i].get('answer')!.errors?.['required']">
+                <mat-error class="alert-danger" *ngIf="this.formdata.value.paragraphrq == true">
                     Required
-                </mat-error>
-            </mat-error>
+                  </mat-error>
             </div>
         </div>
     </div>
@@ -28,14 +23,17 @@
                     <mat-checkbox  (change)="addclick($event,i,j)">
                         {{check.checkvalue}}
                     </mat-checkbox>
+                    
                     <!-- #option -->
                     <br>
                     <mat-form-field appearance="outline" *ngIf="check.otherstatus === true">
                         <mat-label for="otheranswer">Answer</mat-label>
                         <input matInput type="text" formControlName="otheranswer" (keyup)="otherchange($event,i)" />
                     </mat-form-field>
-                    
                 </p>
+                <mat-error class="alert-danger" *ngIf="values.value.reqcheck == true">
+                    Required
+                  </mat-error>
             </div>
         </div>
     </div>
