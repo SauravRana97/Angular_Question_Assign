@@ -32,7 +32,7 @@
                     <br>
                     <mat-form-field appearance="outline" *ngIf="check.otherstatus === true">
                         <mat-label for="otheranswer">Answer</mat-label>
-                        <input matInput type="text" formControlName="otheranswer" />
+                        <input matInput type="text" formControlName="otheranswer" (keyup)="otherchange($event,i)" />
                     </mat-form-field>
                     
                 </p>
