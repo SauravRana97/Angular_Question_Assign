@@ -4,7 +4,7 @@
   X
 </button>
 
-<form [formGroup]="userform" ngClass="form" (ngSubmit)="submit(true)">
+<form [formGroup]="userform" (ngSubmit)="submit(true)">
   <div>
     <mat-form-field appearance="outline">
       <mat-label>Select</mat-label>
@@ -14,15 +14,6 @@
       <mat-hint>Select type of question</mat-hint>
     </mat-form-field>
     <div>
-      <!-- <mat-error
-        *ngIf="userform.controls.type.invalid && (userform.controls.type.dirty || userform.controls.type.touched)">
-        <mat-error class="alert-danger" *ngIf="userform.controls.type.errors?.['required']">
-          Required
-        </mat-error>
-         <mat-error class="alert-danger" *ngIf="userform.controls.name.errors?.['pattern']">
-      First Name Invalid
-  </mat-error> 
-      </mat-error> -->
     </div>
   </div>
   <div>
@@ -30,14 +21,11 @@
       <mat-label>Enter the Question ?</mat-label>
       <input matInput formControlName="question">
     </mat-form-field>
-    <mat-error ngClass="fielderror"
+    <mat-error [ngClass]="['fielderror']"
       *ngIf="userform.controls.question.invalid && (userform.controls.question.dirty || userform.controls.question.touched)">
       <mat-error class="alert-danger" *ngIf="userform.controls.question.errors?.['required']">
         Required
       </mat-error>
-      <!-- <mat-error class="alert-danger" *ngIf="userform.controls.name.errors?.['pattern']">
-        First Name Invalid
-    </mat-error> -->
     </mat-error>
   </div>
   <div>
@@ -45,7 +33,7 @@
       <mat-label>Enter the Question ?</mat-label>
       <input matInput formControlName="checkqst" required>
     </mat-form-field>
-    <mat-error ngClass="fielderror"
+    <mat-error [ngClass]="['fielderror']"
       *ngIf="userform.controls.checkqst.invalid && (userform.controls.checkqst.dirty || userform.controls.checkqst.touched)">
       <mat-error class="alert-danger" *ngIf="userform.controls.checkqst.errors?.['required']">
         Required
@@ -55,20 +43,19 @@
   <div formArrayName='checkbox' *ngIf="userform.value.type == '2'">
     <div *ngFor="let checkboxs of checkbox().controls; let i=index">
       <div [formGroupName]="i">
-        <div ngClass="formfielderror">
+        <div [ngClass]="['formfielderror']">
           <ng-container *ngIf="checkboxs.value.checkvalue !=='other' ">
-          <mat-form-field appearance="outline">
-            <mat-label for="checkbox">Add Answer Options ?</mat-label>
-            <input matInput type="text" formControlName="checkvalue" />
-          </mat-form-field>
-        </ng-container>
-
+            <mat-form-field appearance="outline">
+              <mat-label for="checkbox">Add Answer Options ?</mat-label>
+              <input matInput type="text" formControlName="checkvalue" />
+            </mat-form-field>
+          </ng-container>
           <ng-container *ngIf="i !== 0 && checkboxs.value.checkvalue !=='other'">
             <button mat-stroked-button color="warn" type="button" (click)="removeItem(i)"> X
             </button>
           </ng-container>
           <p></p>
-          <mat-error ngClass="fielderror"
+          <mat-error [ngClass]="['fielderror']"
             *ngIf="checkbox().controls[i].get('checkvalue')!.invalid && (checkbox().controls[i].get('checkvalue')!.dirty || checkbox().controls[i].get('checkvalue')!.touched)">
 
             <mat-error class="alert-danger" *ngIf="checkbox().controls[i].get('checkvalue')!.errors?.['required']">
@@ -76,23 +63,19 @@
             </mat-error>
           </mat-error>
         </div>
-
       </div>
     </div>
-    <button mat-raised-button color="primary" [disabled]="!btn"
-      ngClass="formfielderror" type="button" (click)="createItem()"> + add
+    <button mat-raised-button color="primary" [disabled]="!btn" [ngClass]="['formfielderror']" type="button"
+      (click)="createItem()"> + add
       another answer
     </button>
   </div>
   <p><mat-checkbox formControlName="userchoice" *ngIf="userform.value.type == '2'" (click)="addother()">Allow user to
       specify their own answer</mat-checkbox></p>
-  <p><mat-checkbox formControlName="paragraphrq" *ngIf="userform.value.type == '1'">This field is required</mat-checkbox></p>
-  <p><mat-checkbox formControlName="checkreq" *ngIf="userform.value.type == '2'">This field is required</mat-checkbox></p>
-  <!-- <input class="example-margin" type="checkbox" formControlName="userchoice">Checked <br>
-    <input class="example-margin" type="checkbox" formControlName="requiredfield">Checked -->
+  <p><mat-checkbox formControlName="paragraphrq" *ngIf="userform.value.type == '1'">This field is
+      required</mat-checkbox></p>
+  <p><mat-checkbox formControlName="checkreq" *ngIf="userform.value.type == '2'">This field is required</mat-checkbox>
+  </p>
 
-
-  <button type="submit" mat-raised-button [ngClass]="['submit']" color="primary">Submit
-    <!-- [disabled]="userform.invalid" -->
-  </button>
+  <button type="submit" mat-raised-button [ngClass]="['submit']" color="primary">Submit</button>
 </form>

@@ -3,7 +3,7 @@
     <div formArrayName='paragraphdata'>
         <div *ngFor="let values of paragraphdata().controls; let i=index">
             <div [formGroupName]="i">
-                <h2 required>{{values.value.question}} ?</h2>
+                <h2 >{{values.value.question}} ?</h2>
                 <mat-form-field appearance="outline">
                     <mat-label for="Answer">Answer</mat-label>
                     <input matInput type="text" formControlName="answer"(keyup)="changere(i)" />
@@ -15,20 +15,21 @@
         <div *ngFor="let values of checkboxdata().controls; let i=index">
             <div [formGroupName]="i">
                 <p> Q{{i+1}}:{{values.value.question}}?</p>
-                <!-- <div #option> -->
+
                 <p *ngFor="let check of values.value.checkoption; let j=index">
                     <mat-checkbox  (change)="addclick($event,i,j)">
                         {{check.checkvalue}}
                     </mat-checkbox>
-                    
-                    <!-- #option -->
                     <br>
-                    <mat-form-field appearance="outline" *ngIf="check.otherstatus === true">
+                    <mat-form-field appearance="outline" *ngIf="check.otherstatus">
                         <mat-label for="otheranswer">Answer</mat-label>
                         <input matInput type="text" formControlName="otheranswer" (keyup)="otherchange($event,i)" />
                     </mat-form-field>
+                    <!-- <mat-error class="alert-danger" *ngIf="check.otherstatus">
+                        Required
+                      </mat-error> -->
                 </p>
-                <mat-error class="alert-danger" *ngIf="values.value.reqcheck == true">
+                <mat-error class="alert-danger" *ngIf="values?.value?.reqcheck">
                     Required
                   </mat-error>
             </div>

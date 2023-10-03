@@ -2,15 +2,15 @@
 <h2 *ngIf="this.userdata.paragraphdata?.length > 0">Paraghraph Questions Answer</h2>
 <ol *ngFor="let data of userdata.paragraphdata;let i=index">
     <li> Q : {{data.question}}</li>
-    <li>A : {{data.answer}}</li>
+    <li>Ans : {{data.answer}}</li>
 </ol>
-<h2 *ngIf="this.userdata.checkboxdata?.length > 0">Checkboxs Questions Answer</h2>
+<h2 *ngIf="this.userdata.checkboxdata?.length">Checkboxs Questions Answer</h2>
 <ol *ngFor="let data of userdata.checkboxdata;let i=index">
     <li>Q{{i+1}}:{{data.question}}</li>
     <p *ngFor="let checkoption of data.checkoption;let j=index">
-        <li *ngIf="checkoption.checkstatus == true && checkoption.checkvalue !== 'other'">A : {{checkoption.checkvalue}}
+        <li *ngIf="checkoption.checkstatus && checkoption.checkvalue !== 'other'">Ans : {{checkoption.checkvalue}}
         </li>
 
-        <li *ngIf="checkoption.checkstatus == true && checkoption.checkvalue === 'other'">Other : {{data.otheranswer}}</li>
+        <li *ngIf="checkoption.checkstatus && checkoption.checkvalue === 'other'">Other : {{data.otheranswer}}</li>
     </p>
 </ol>

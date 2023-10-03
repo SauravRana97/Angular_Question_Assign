@@ -23,6 +23,9 @@ export class QmodalComponent implements OnInit {
   ngOnInit(): void {
     this.createItem();
   }
+
+  btn: boolean = false;
+
   userform = this.fb.group({
     type: ['', []],
     question: ['', [Validators.required]],
@@ -33,15 +36,22 @@ export class QmodalComponent implements OnInit {
     checkbox: this.fb.array([], [Validators.required]),
   });
 
+  selectvalue = [
+    {
+      value: 1,
+      data: 'Paragraph Question',
+    },
+    { value: 2, data: 'Check Box list Question' },
+  ];
+
   submit(value: any) {
     let checkbox = this.checkbox().value.map((item: any) => {
       return item.checkvalue;
     });
     let check = Object.values(checkbox).includes('');
-
     if (
-      this.userform.value.question !== '' ||
-      (this.userform.value.checkqst !== '' && check == false)
+      this.userform.value.question ||
+      (this.userform.value.checkqst && !check)
     ) {
       this.FormService.formdata(this.userform);
       this.dialog.close(value);
@@ -51,10 +61,10 @@ export class QmodalComponent implements OnInit {
   checkbox(): FormArray {
     return this.userform.get('checkbox') as FormArray;
   }
-  btn:boolean = false
+
   createItem() {
-    if (this.userform.value.checkbox?.length! < 5) {
-      this.btn = true
+    if (this.userform.value.checkbox!.length < 5) {
+      this.btn = true;
       this.checkbox().push(
         this.fb.group({
           checkvalue: ['', [Validators.required]],
@@ -62,16 +72,15 @@ export class QmodalComponent implements OnInit {
           othertatus: [false, [Validators.required]],
         })
       );
-    }else{
-      this.btn = false
-    } 
+    } else {
+      this.btn = false;
+    }
   }
   addother() {
-    let check = this.userform.value.checkbox?.map((item:any)=>{
-      return item.checkvalue
-    });   
-     
-    if (!check?.includes('other')) {  
+    let check = this.userform.value.checkbox?.map((item: any) => {
+      return item.checkvalue;
+    });
+    if (!check?.includes('other')) {
       this.checkbox().push(
         this.fb.group({
           checkvalue: ['other', [Validators.required]],
@@ -82,15 +91,8 @@ export class QmodalComponent implements OnInit {
     }
   }
   removeItem(i: number) {
-    const fa = this.userform.get('checkbox') as FormArray;
-    fa.removeAt(i);
+    const uf = this.checkbox();
+    uf.removeAt(i);
+    this.btn = true;
   }
-
-  selectvalue = [
-    {
-      value: 1,
-      data: 'Paragraph Question',
-    },
-    { value: 2, data: 'Check Box list Question' },
-  ];
 }
