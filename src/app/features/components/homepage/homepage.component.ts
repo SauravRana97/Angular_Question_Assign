@@ -1,4 +1,8 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+} from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -31,6 +35,7 @@ export class HomepageComponent implements OnInit {
     checkboxdata: this.fb.array([]),
   });
 
+
   paragraphdata(): FormArray {
     return this.homeform.get('paragraphdata') as FormArray;
   }
@@ -52,6 +57,7 @@ export class HomepageComponent implements OnInit {
 
     this.Dialog.afterClosed().subscribe((result) => {
       if (result) {
+
         this.formdata = this.FormService.formres;
         if (this.formdata.value.type == 1) {
           if (this.formdata.value.paragraphrq) {
@@ -78,7 +84,8 @@ export class HomepageComponent implements OnInit {
                   this.formdata.value.checkbox,
                   [Validators.required],
                 ],
-                otheranswer: ['', [Validators.required]],
+                otheranswer: ['',
+                  [Validators.required]],
                 reqcheck: [true],
               })
             );
@@ -109,32 +116,27 @@ export class HomepageComponent implements OnInit {
 
   addclick(event: any, i: number, j: number) {
     if (
-      this.checkboxdata().at(i).get('checkoption')!.value[j].checkvalue ==
-      'other'
-    ) {
-      this.checkboxdata().at(i).value.reqcheck = false
-      this.checkboxdata().at(i).get('checkoption')!.value[j].otherstatus =
-        event.checked;
+      this.checkboxdata().at(i).get('checkoption')!.value[j].checkvalue =='other') {
+        this.checkboxdata().at(i).value.reqcheck = false
+      this.checkboxdata().at(i).get('checkoption')!.value[j].otherstatus = event.checked;
+
+      
     }
 
-    this.checkboxdata().at(i).get('checkoption')!.value[j].checkstatus =
-      event.checked;
+    this.checkboxdata().at(i).get('checkoption')!.value[j].checkstatus = event.checked;
     this.checkboxdata().at(i).value.reqcheck = false;
 
-    // if (!this.checkboxdata().at(i).get('checkoption')!.value[j].checkstatus) {
-    //   // if (this.checkboxdata().at(i).get('reqcheck')!.value) {
-    //   //   this.checkboxdata().at(i).value.reqcheck = true;
-    //   // }
+    if (!this.checkboxdata().at(i).get('checkoption')!.value[j].checkstatus) {
+      // if (this.checkboxdata().at(i).get('reqcheck')!.value) {
+      //   this.checkboxdata().at(i).value.reqcheck = true;
+      // }
 
-    //   this.checkboxdata().at(i).value.reqcheck = true;
-    // }
+      this.checkboxdata().at(i).value.reqcheck = true;
+    }
   }
   otherchange(event: any, i: number) {
     console.log(event, i);
-    // this.checkboxdata().value[i].reqcheck = false;
-    // console.log(this.checkboxdata().value[i].reqcheck);
     
-
     // this.checkboxdata().at(i).value.reqcheck = false;
   }
 
